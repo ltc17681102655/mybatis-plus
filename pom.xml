@@ -20,6 +20,7 @@
 
     <modules>
         <module>mybatis-generator</module>
+        <module>mybatis-plus</module>
     </modules>
 
     <dependencies>
