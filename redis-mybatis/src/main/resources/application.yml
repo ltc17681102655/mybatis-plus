@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+#mysql
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.106.208.40:3306/my-pro-db
+    username: root
+    password: 1234
+
+#mybatis-plus:
+##  config-location: classpath:mybatis-config.xml
+#  mapper-locations: classpath:mybatis/*.xml
+#  type-aliases-package: com.aikucun.model
