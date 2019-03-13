@@ -3,9 +3,13 @@ package com.ltc.redis.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.ltc.redis.dto.AkcBuoyDeployAddDTO;
 import com.ltc.redis.dto.AkcBuoyDeployDeleteDTO;
+import com.ltc.redis.dto.AkcBuoyDeploySelectDTO;
 import com.ltc.redis.dto.AkcBuoyDeployUpdateDTO;
 import com.ltc.redis.entity.AkcBuoyDeploy;
 import com.ltc.redis.enums.RedisKeyEnum;
@@ -65,6 +69,20 @@ public class AkcBuoyDeployController {
         HashMap<String, Object> map = new HashMap<>();
         map.put("deleted", 0);
         return akcBuoyDeployMapper.selectByMap(map);
+    }
+
+    @GetMapping("/selectPage")
+    @ApiOperation(value = "浮标分页查询")
+    public IPage<AkcBuoyDeploy> selectPage(AkcBuoyDeploySelectDTO akcBuoyDeploySelectDTO) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("deleted", 0);
+        Page<AkcBuoyDeploy> page = new Page<AkcBuoyDeploy>(akcBuoyDeploySelectDTO.getPageIndex(), akcBuoyDeploySelectDTO.getPageSize());
+        //根据有传值的属性进行筛选
+        AkcBuoyDeploy akcBuoyDeploy = new AkcBuoyDeploy();
+        BeanUtils.copyProperties(akcBuoyDeploySelectDTO, akcBuoyDeploy);
+        QueryWrapper<AkcBuoyDeploy> diseaseQueryWrapperw = new QueryWrapper<AkcBuoyDeploy>(akcBuoyDeploy);
+        IPage<AkcBuoyDeploy> akcBuoyDeployIPage = akcBuoyDeployMapper.selectPage(page, diseaseQueryWrapperw);
+        return akcBuoyDeployIPage;
     }
 
     /**
