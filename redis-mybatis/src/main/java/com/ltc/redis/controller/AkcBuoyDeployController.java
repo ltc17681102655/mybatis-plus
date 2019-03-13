@@ -4,17 +4,23 @@ package com.ltc.redis.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.ltc.redis.dto.AkcBuoyDeployAddDTO;
+import com.ltc.redis.dto.AkcBuoyDeployDeleteDTO;
+import com.ltc.redis.dto.AkcBuoyDeployUpdateDTO;
 import com.ltc.redis.entity.AkcBuoyDeploy;
+import com.ltc.redis.enums.RedisKeyEnum;
 import com.ltc.redis.mapper.AkcBuoyDeployMapper;
 import com.ltc.redis.utils.RedisUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,6 +33,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/redis/akc-buoy-deploy")
+@Api(tags = "AkcBuoyDeployController")
 public class AkcBuoyDeployController {
 
     @Autowired
@@ -38,7 +45,13 @@ public class AkcBuoyDeployController {
     @PostConstruct
     public void init() {
         //默认无限期
-        redisUtils.set("buoy", JSONObject.toJSONString(akcBuoyDeployMapper.selectList(null)));
+        this.selectAll2redisCache();
+    }
+
+    public void selectAll2redisCache() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("deleted", 0);
+        redisUtils.set(RedisKeyEnum.BUOY.getKey(), JSONObject.toJSONString(akcBuoyDeployMapper.selectByMap(map)));
     }
 
     /**
@@ -47,8 +60,11 @@ public class AkcBuoyDeployController {
      * @return
      */
     @GetMapping("/selectList")
+    @ApiOperation(value = "查询浮标列表")
     public List<AkcBuoyDeploy> selectList() {
-        return akcBuoyDeployMapper.selectList(null);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("deleted", 0);
+        return akcBuoyDeployMapper.selectByMap(map);
     }
 
     /**
@@ -56,6 +72,7 @@ public class AkcBuoyDeployController {
      * @return http://localhost:8081/redis/akc-buoy-deploy/getkey?key=buoy
      */
     @GetMapping("/getkey")
+    @ApiOperation(value = "redis通过key获取数据")
     public List<AkcBuoyDeploy> getkey(String key) {
         String json = redisUtils.get(key);
         System.out.println(json);
@@ -65,12 +82,39 @@ public class AkcBuoyDeployController {
     }
 
     /**
-     *
+     * @param akcBuoyDeployAddDTO
      */
-    @GetMapping("insert")
-    public void insert() {
-
+    @PostMapping("insert")
+    @ApiOperation(value = "添加浮标")
+    public void insert(@Valid @RequestBody AkcBuoyDeployAddDTO akcBuoyDeployAddDTO) {
+        if (akcBuoyDeployAddDTO != null) {
+            AkcBuoyDeploy akcBuoyDeploy = new AkcBuoyDeploy();
+            BeanUtils.copyProperties(akcBuoyDeployAddDTO, akcBuoyDeploy);
+            int insert = akcBuoyDeployMapper.insert(akcBuoyDeploy);
+            this.selectAll2redisCache();
+        }
     }
+
+
+    /**
+     * @param akcBuoyDeployDeleteDTO
+     */
+    @PostMapping("delete")
+    @ApiOperation(value = "删除浮标")
+    public void delete(@Valid @RequestBody AkcBuoyDeployDeleteDTO akcBuoyDeployDeleteDTO) {
+        int batchIds = akcBuoyDeployMapper.deleteBatchIds(akcBuoyDeployDeleteDTO.getIds());
+        this.selectAll2redisCache();
+    }
+
+    @PostMapping("update")
+    @ApiOperation(value = "修改浮标")
+    public void update(@Valid @RequestBody AkcBuoyDeployUpdateDTO akcBuoyDeployUpdateDTO) {
+        AkcBuoyDeploy akcBuoyDeploy = new AkcBuoyDeploy();
+        BeanUtils.copyProperties(akcBuoyDeployUpdateDTO, akcBuoyDeploy);
+        int update = akcBuoyDeployMapper.updateById(akcBuoyDeploy);
+        this.selectAll2redisCache();
+    }
+
 
     public static void main(String[] args) {
         //

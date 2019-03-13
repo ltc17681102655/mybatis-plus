@@ -1,6 +1,8 @@
 package com.ltc.redis.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.ltc.common.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +23,7 @@ public class AkcBuoyDeploy extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    private int id;
     /**
      * 名称
      */
@@ -59,22 +62,22 @@ public class AkcBuoyDeploy extends BaseEntity {
     /**
      * 开始时间
      */
-    private LocalDateTime beginTime;
+    private Date beginTime;
 
     /**
      * 结束时间
      */
-    private LocalDateTime endTime;
+    private Date endTime;
 
     /**
      * 创建时间
      */
-    private LocalDateTime createdDate;
+    private Date createdDate;
 
     /**
      * 最后修改时间
      */
-    private LocalDateTime lastModifiedDate;
+    private Date lastModifiedDate;
 
     /**
      * 版本号
