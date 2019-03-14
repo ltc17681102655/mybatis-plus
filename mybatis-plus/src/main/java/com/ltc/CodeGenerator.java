@@ -43,7 +43,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
 //        String projectPath = System.getProperty("user.dir");
-        String projectPath = "E:\\demo\\mybatis-plus\\redis-mybatis";
+        String projectPath = "E:\\demo\\mybatis-plus\\sharding-jdbc";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("ltc");
         gc.setOpen(false);
