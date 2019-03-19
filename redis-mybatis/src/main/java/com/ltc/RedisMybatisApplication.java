@@ -11,8 +11,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @MapperScan(value = {"com.ltc.redis.mapper"})
 @EnableSwaggerConfiguration
-@EnableConfigurationProperties
-@Configuration
 public class RedisMybatisApplication {
 
     public static void main(String[] args) {

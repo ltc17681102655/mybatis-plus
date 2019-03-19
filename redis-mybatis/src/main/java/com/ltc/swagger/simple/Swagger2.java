@@ -1,4 +1,4 @@
-//package com.ltc.swagger;
+//package com.ltc.swagger.simple;
 //
 //import com.google.common.base.Predicates;
 //import org.springframework.context.annotation.Bean;

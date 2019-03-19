@@ -18,7 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@Profile({"dev", "test", "application.yml"})
+@Profile({"dev", "test"})
 @EnableSwagger2
 @ConditionalOnBean(
         annotation = {EnableSwaggerConfiguration.class}
