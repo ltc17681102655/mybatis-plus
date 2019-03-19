@@ -15,9 +15,22 @@ spring:
     password: 578519083
     host: 39.106.208.40
     port: 6379
+  profiles:
+    active: dev
 
+---
 
-#mybatis-plus:
-#  #  config-location: classpath:mybatis-config.xml
-#  mapper-locations: classpath:mapper/redis/*.xml
-#  type-aliases-package: com.ltc.redis.entity
+spring:
+  profiles: dev
+  #mysql
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.106.208.40:3306/my-pro-db
+    username: root
+    password: 1234
+  #redis
+  redis:
+    database: 0
+    password: 578519083
+    host: 39.106.208.40
+    port: 6379
