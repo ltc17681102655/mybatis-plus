@@ -1,5 +1,6 @@
 //package com.ltc.swagger;
 //
+//import com.google.common.base.Predicates;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import springfox.documentation.builders.ApiInfoBuilder;
@@ -28,6 +29,7 @@
 //                .select()
 //                // 扫描的包所在位置
 //                .apis(RequestHandlerSelectors.basePackage("com.ltc"))
+//                .paths(Predicates.not(PathSelectors.regex("/error.*")))//错误路径不监控
 //                // 扫描的 URL 规则
 //                .paths(PathSelectors.any())
 //                .build();

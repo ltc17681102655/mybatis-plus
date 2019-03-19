@@ -18,7 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@Profile({"dev", "test","application.yml"})
+@Profile({"dev", "test", "application.yml"})
 @EnableSwagger2
 @ConditionalOnBean(
         annotation = {EnableSwaggerConfiguration.class}
@@ -42,10 +42,17 @@ public class SwaggerAutoConfiguration {
         LOGGER.info("email:{}", this.swaggerProperties.getEmail());
         LOGGER.info("version:{}", this.swaggerProperties.getVersion());
         LOGGER.info("description:{}", this.swaggerProperties.getDescription());
-        return (new Docket(DocumentationType.SWAGGER_2)).apiInfo(this.apiInfo()).select().apis(RequestHandlerSelectors.basePackage(this.swaggerProperties.getBasePackage())).paths(PathSelectors.any()).build();
+        return (new Docket(DocumentationType.SWAGGER_2))
+                .apiInfo(this.apiInfo()).select()
+                .apis(RequestHandlerSelectors.basePackage(this.swaggerProperties.getBasePackage()))
+                .paths(PathSelectors.any()).build();
     }
 
     private ApiInfo apiInfo() {
-        return (new ApiInfoBuilder()).title(this.swaggerProperties.getTitle()).contact(new Contact(this.swaggerProperties.getCreateName(), this.swaggerProperties.getUrl(), this.swaggerProperties.getEmail())).version(this.swaggerProperties.getVersion()).description(this.swaggerProperties.getDescription()).build();
+        return (new ApiInfoBuilder())
+                .title(this.swaggerProperties.getTitle())
+                .contact(new Contact(this.swaggerProperties.getCreateName(), this.swaggerProperties.getUrl(), this.swaggerProperties.getEmail()))
+                .version(this.swaggerProperties.getVersion())
+                .description(this.swaggerProperties.getDescription()).build();
     }
 }

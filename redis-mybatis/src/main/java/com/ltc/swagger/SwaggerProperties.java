@@ -12,7 +12,7 @@ public class SwaggerProperties {
     private String createName = "默认创建者";
     private String url = "https://github.com/swagger-api/swagger-core/wiki/annotations";
     private String email = "默认邮箱";
-    private String version = "1.0";
+    private String version = "2.0";
     private String description = "API 描述";
 
     public SwaggerProperties() {

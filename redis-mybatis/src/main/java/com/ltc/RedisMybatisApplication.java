@@ -13,7 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwaggerConfiguration
 @EnableConfigurationProperties
 @Configuration
-//@EnableSwagger2
 public class RedisMybatisApplication {
 
     public static void main(String[] args) {
