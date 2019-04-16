@@ -43,7 +43,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
 //        String projectPath = System.getProperty("user.dir");
-        String projectPath = "E:\\demo\\mybatis-plus-collect\\mybatis-plus-collect\\mybatis-generator";
+        String projectPath = "E:\\demo\\mybatis-plus\\mybatis-generator";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("ltc");
         gc.setOpen(false);
@@ -51,7 +51,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://39.106.208.40:3306/aikucun?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://39.106.208.40:3306/aaa-deliver?useUnicode=true&useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
@@ -61,7 +61,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.ltc.mybatis");
+        pc.setParent("com.ltc.repository");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -112,8 +112,9 @@ public class CodeGenerator {
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-        strategy.setInclude(scanner("表名"));
-        strategy.setSuperEntityColumns("id");
+//        strategy.setInclude(scanner("表名"));
+//        strategy.setInclude()
+//        strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
